@@ -29,7 +29,7 @@ export function ExperienceTimeline() {
         {portfolioData.experience.map((exp, index) =>
         <div key={index} className="relative pl-8 sm:pl-0">
             {/* Timeline line for mobile */}
-            <div className="absolute bottom-0 left-[11px] top-2 w-px bg-neutral-200 dark:bg-neutral-800 sm:hidden" />
+            <div className="absolute bottom-0 left-[5px] top-[11px] w-px bg-neutral-200 dark:bg-neutral-800 sm:hidden" />
 
             <div className="flex flex-col sm:flex-row sm:gap-8">
               {/* Date column (desktop) */}

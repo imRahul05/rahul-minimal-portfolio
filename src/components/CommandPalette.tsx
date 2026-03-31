@@ -4,6 +4,7 @@ import {
   Search as SearchIcon,
   Home as HomeIcon,
   Folder as FolderIcon,
+  MessageCircle as MessageCircleIcon,
   Github as GithubIcon,
   Linkedin as LinkedinIcon,
   Mail as MailIcon,
@@ -56,6 +57,12 @@ export function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProps) {
     action: () => navigate('/projects')
   },
   {
+    id: 'contact',
+    title: 'Contact',
+    icon: MessageCircleIcon,
+    action: () => navigate('/#contact')
+  },
+  {
     id: 'github',
     title: 'GitHub',
     icon: GithubIcon,
@@ -100,27 +107,29 @@ export function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProps) {
           className="fixed inset-0 z-50 bg-neutral-950/50 backdrop-blur-sm"
           onClick={() => setIsOpen(false)} />
         
-          <motion.div
-          initial={{
-            opacity: 0,
-            scale: 0.95,
-            y: -20
-          }}
-          animate={{
-            opacity: 1,
-            scale: 1,
-            y: 0
-          }}
-          exit={{
-            opacity: 0,
-            scale: 0.95,
-            y: -20
-          }}
-          transition={{
-            duration: 0.15
-          }}
-          className="fixed left-1/2 top-[15%] z-50 w-full max-w-lg -translate-x-1/2 px-4 sm:px-0">
-          
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+            initial={{
+              opacity: 0,
+              scale: 0.95,
+              y: -20
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: 0
+            }}
+            exit={{
+              opacity: 0,
+              scale: 0.95,
+              y: -20
+            }}
+            transition={{
+              duration: 0.15
+            }}
+            className="w-full max-w-lg"
+            onClick={(e) => e.stopPropagation()}>
+
             <div className="overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-2xl dark:border-neutral-800 dark:bg-neutral-900">
               <div className="flex items-center border-b border-neutral-200 px-4 dark:border-neutral-800">
                 <SearchIcon className="h-5 w-5 text-neutral-500" />
@@ -160,7 +169,8 @@ export function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProps) {
               }
               </div>
             </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </>
       }
     </AnimatePresence>);
