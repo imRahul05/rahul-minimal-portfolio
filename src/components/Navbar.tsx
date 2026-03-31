@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
+  ArrowUpRight as ArrowUpRightIcon,
   Moon as MoonIcon,
   Sun as SunIcon,
   Search as SearchIcon } from
@@ -15,11 +16,18 @@ export function Navbar({ onOpenCommandPalette }: NavbarProps) {
   const navLinks = [
   {
     name: 'Home',
-    path: '/'
+    path: '/',
+    isHashLink: false
   },
   {
     name: 'Projects',
-    path: '/projects'
+    path: '/projects',
+    isHashLink: false
+  },
+  {
+    name: 'Contact',
+    path: '/#contact',
+    isHashLink: true
   }];
 
   return (
@@ -29,17 +37,25 @@ export function Navbar({ onOpenCommandPalette }: NavbarProps) {
           to="/"
           className="text-xl font-bold tracking-tighter text-neutral-900 dark:text-white">
           
-          RK
+          Rahul
         </Link>
 
         <div className="flex items-center gap-4 sm:gap-6">
           <nav className="hidden items-center gap-6 sm:flex">
             {navLinks.map((link) =>
+            link.isHashLink ?
+            <a
+              key={link.path}
+              href={link.path}
+              className={`text-sm font-medium transition-colors hover:text-neutral-900 dark:hover:text-white ${location.pathname === '/' && location.hash === '#contact' ? 'text-neutral-900 dark:text-white' : 'text-neutral-500 dark:text-neutral-400'}`}>
+
+                {link.name}
+              </a> :
             <Link
               key={link.path}
               to={link.path}
               className={`text-sm font-medium transition-colors hover:text-neutral-900 dark:hover:text-white ${location.pathname === link.path ? 'text-neutral-900 dark:text-white' : 'text-neutral-500 dark:text-neutral-400'}`}>
-              
+
                 {link.name}
               </Link>
             )}

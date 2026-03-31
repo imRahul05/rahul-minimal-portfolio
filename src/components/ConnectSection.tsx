@@ -23,11 +23,6 @@ export function ConnectSection() {
     name: 'Email',
     url: `mailto:${portfolioData.personal.email}`,
     icon: MailIcon
-  },
-  {
-    name: 'Portfolio',
-    url: portfolioData.personal.portfolioUrl,
-    icon: GlobeIcon
   }];
 
   return (

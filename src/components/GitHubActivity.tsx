@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from './ThemeProvider';
 interface ContributionDay {
@@ -27,6 +27,12 @@ const MONTHS = [
 'Nov',
 'Dec'];
 
+const CELL_SIZE = 13;
+const CELL_GAP = 3;
+const CELL_PITCH = CELL_SIZE + CELL_GAP;
+const DAY_LABEL_WIDTH = 32;
+const MONTH_WINDOW = 6;
+
 export function GitHubActivity() {
   const { theme } = useTheme();
   const [weeks, setWeeks] = useState<ContributionWeek[]>([]);
@@ -34,14 +40,13 @@ export function GitHubActivity() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   useEffect(() => {
-    fetch('https://github-contributions-api.jogruber.de/v4/imrahul05?y=last').
+    fetch('https://github-contributions-api.jogruber.de/v4/rahulitme?y=last').
     then((res) => {
       if (!res.ok) throw new Error('Failed to fetch');
       return res.json();
     }).
     then((data) => {
       if (data.contributions) {
-        // Group contributions into weeks
         const allDays: ContributionDay[] = data.contributions.map(
           (d: {date: string;count: number;level: number;}) => ({
             date: d.date,
@@ -49,16 +54,23 @@ export function GitHubActivity() {
             level: d.level
           })
         );
+
+        const latestDay = allDays[allDays.length - 1];
+        const windowStart = latestDay ? new Date(latestDay.date) : new Date();
+        windowStart.setMonth(windowStart.getMonth() - MONTH_WINDOW);
+
+        const recentDays = allDays.filter((day) => new Date(day.date) >= windowStart);
         const grouped: ContributionWeek[] = [];
-        for (let i = 0; i < allDays.length; i += 7) {
+
+        for (let i = 0; i < recentDays.length; i += 7) {
           grouped.push({
-            days: allDays.slice(i, i + 7)
+            days: recentDays.slice(i, i + 7)
           });
         }
+
         setWeeks(grouped);
         setTotalContributions(
-          data.total?.lastYear ??
-          allDays.reduce(
+          recentDays.reduce(
             (sum: number, d: ContributionDay) => sum + d.count,
             0
           )
@@ -131,35 +143,38 @@ export function GitHubActivity() {
               <span className="font-semibold text-neutral-900 dark:text-white">
                 {totalContributions.toLocaleString()}
               </span>{' '}
-              contributions in the last year
+              contributions in the last 6 months
             </p>
 
-            {/* Month labels */}
-            <div
-            className="relative mb-1 ml-8 flex text-[10px] text-neutral-400 dark:text-neutral-500"
-            style={{
-              gap: 0
-            }}>
-            
-              {monthLabels.map((m, i) =>
-            <span
-              key={i}
-              className="absolute"
-              style={{
-                left: m.col * 16
-              }}>
-              
-                  {m.label}
-                </span>
-            )}
-            </div>
+            <div className="min-w-max">
+              {/* Month labels */}
+              <div
+                className="relative mb-2 text-[10px] leading-none text-neutral-400 dark:text-neutral-500"
+                style={{
+                  height: 12,
+                  marginLeft: DAY_LABEL_WIDTH + 8
+                }}>
 
-            <div className="flex gap-0">
+                {monthLabels.map((m, i) =>
+                <span
+                  key={i}
+                  className="absolute top-0 whitespace-nowrap"
+                  style={{
+                    left: m.col * CELL_PITCH
+                  }}>
+
+                    {m.label}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex gap-0">
               {/* Day labels */}
               <div
               className="mr-2 flex flex-col justify-between py-[2px] text-[10px] text-neutral-400 dark:text-neutral-500"
               style={{
-                height: 7 * 16 - 4
+                width: DAY_LABEL_WIDTH,
+                height: 7 * CELL_PITCH - CELL_GAP
               }}>
               
                 <span className="leading-[16px]">Mon</span>
@@ -170,15 +185,15 @@ export function GitHubActivity() {
               {/* Grid */}
               <div className="flex gap-[3px]">
                 {weeks.map((week, wi) =>
-              <div key={wi} className="flex flex-col gap-[3px]">
+              <div key={wi} className="flex flex-col gap-[3px] ">
                     {week.days.map((day, di) =>
                 <div
                   key={di}
                   title={`${day.count} contribution${day.count !== 1 ? 's' : ''} on ${day.date}`}
-                  className="rounded-sm transition-colors"
+                  className="rounded-[4px] transition-colors"
                   style={{
-                    width: 13,
-                    height: 13,
+                    width: CELL_SIZE,
+                    height: CELL_SIZE,
                     backgroundColor: colors[day.level] || colors[0]
                   }} />
 
@@ -186,6 +201,7 @@ export function GitHubActivity() {
                   </div>
               )}
               </div>
+            </div>
             </div>
 
             {/* Legend */}
