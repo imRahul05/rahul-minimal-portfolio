@@ -45,7 +45,8 @@ export const portfolioData = {
     location: 'Remote',
     highlights: [
     'Developed and maintained scalable web applications using React.js, Node.js, and Express.js.',
-    'Designed and implemented RESTful APIs, enabling seamless communication between frontend and backend systems.']
+    'Designed and implemented RESTful APIs, enabling seamless communication between frontend and backend systems.',
+    'Integrated APIs with frontend interfaces to ensure smooth data flow and real-time updates.']
 
   },
   {
