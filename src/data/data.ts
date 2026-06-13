@@ -38,29 +38,39 @@ export const portfolioData = {
 
   experience: [
   {
-    position: 'Frontend Developer',
-    company: 'Zylentrix Ltd',
-    duration: 'May 2025 - Jan 2026',
+    position: 'Full Stack Developer',
+    company: 'Campaign Harvest',
+    duration: 'Sep 2025 - Mar 2026',
     type: 'Full-time',
+    location: 'Remote',
+    highlights: [
+    'Developed and maintained scalable web applications using React.js, Node.js, and Express.js.',
+    'Designed and implemented RESTful APIs, enabling seamless communication between frontend and backend systems.',
+    'Integrated APIs with frontend interfaces to ensure smooth data flow and real-time updates.']
+
+  },
+  {
+    position: 'Frontend Developer Intern',
+    company: 'Zylentrix Ltd',
+    duration: 'Mar 2025 - Sep 2025',
+    type: 'Internship',
     location: 'Remote',
     highlights: [
     'Developed production-ready React and Next.js applications for digital marketing platforms at UK-based global consultancy.',
     'Built real-time analytics dashboards tracking campaign performance and user engagement for 20+ clients.',
-    'Improved page load time by 30% through strategic lazy loading and code splitting implementation.',
-    'Collaborated with marketing teams to integrate SEO and content strategies into web platforms, contributing to 250% average ROI increase.']
+    'Improved page load time through strategic lazy loading and code splitting implementation.']
 
   },
   {
     position: 'Frontend Developer Intern',
     company: 'Code Inbound LLP',
-    duration: 'Nov 2024 - Apr 2025',
+    duration: 'Nov 2024 - Feb 2025',
     type: 'Internship',
     location: 'Remote',
     highlights: [
-    'Developed 5+ interactive real-time dashboards for Network Monitoring System (NMS) using React.js and TypeScript, improving UI responsiveness by 25%.',
-    'Integrated REST APIs to support real-time data visualization with <2s latency across all monitoring dashboards.',
-    'Implemented device discovery, SNMP/ICMP monitoring, and bandwidth/traffic tracking features.',
-    'Collaborated with backend developers to optimize data-fetch strategies, reducing frontend data latency by 30%.']
+    'Developed interactive real-time dashboards for Network Monitoring System (NMS) using React.js and TypeScript, improving UI responsiveness.',
+    'Integrated REST APIs to support real-time data visualization across all monitoring dashboards.',
+    'Implemented device discovery, SNMP/ICMP monitoring, and bandwidth/traffic tracking features.']
 
   }],
 
